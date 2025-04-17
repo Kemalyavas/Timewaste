@@ -45,6 +45,8 @@ class TimeWaster {
       'NUMAN': () => this.showVideo('numan'),
       'GANG': () => this.showVideo('gang'),
       'OE': () => this.showVideo('oe'),
+      'MAMAN': () => this.showVideo('maman'),
+      'NIGGA': () => this.showVideo('nigga'),
 
     };
 
