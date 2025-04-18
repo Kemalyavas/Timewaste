@@ -280,6 +280,54 @@ class TimeWaster {
     if (milestones[this.seconds]) {
       this.showMessage(milestones[this.seconds]);
     }
+    // Every 30 seconds (but not at 0)
+  if (this.seconds > 0 && this.seconds % 30 === 0) {
+    this.ephemeralPhotoGlitch();
+  }
+
+  // Still keep ephemeral triggers for videos if needed
+  if (this.ephemeralTriggers && this.ephemeralTriggers[this.seconds]) {
+    this.ephemeralGlitch(this.ephemeralTriggers[this.seconds]);
+  }
+}
+
+// Shows a random photo for 0.1s
+ephemeralPhotoGlitch() {
+  const photos = [
+    'alien.jpg', 'china.jpg', 'gym.jpg', 'heisenberg.jpg',
+    'nigga.jpg', 'numan.jpg', 'trump.jpg'
+    // ...add any other filenames in ./photos
+  ];
+  const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
+
+  const overlay = document.createElement('div');
+  overlay.className = 'photo-overlay';
+  overlay.style.pointerEvents = 'none';
+  overlay.style.position = 'fixed';
+  overlay.style.top = 0;
+  overlay.style.left = 0;
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.background = 'rgba(0,0,0,0.9)';
+  overlay.style.zIndex = '99999';
+  overlay.style.display = 'flex';
+  overlay.style.justifyContent = 'center';
+  overlay.style.alignItems = 'center';
+
+  const img = document.createElement('img');
+  img.src = `./photos/${randomPhoto}`;
+  img.style.maxWidth = '90%';
+  img.style.maxHeight = '90%';
+  overlay.appendChild(img);
+
+  document.body.appendChild(overlay);
+
+  // Remove overlay after 0.1 seconds
+  setTimeout(() => {
+    if (document.body.contains(overlay)) {
+      document.body.removeChild(overlay);
+    }
+  }, 100);
 
     // Trigger ephemeral glitch if defined
     if (this.ephemeralTriggers[this.seconds]) {
